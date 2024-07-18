@@ -1,8 +1,8 @@
 {
-  "name": "zadarma/user-api-v1",
-  "description": "PHP class for Zadarma API",
+  "name": "novofon/user-api-v1",
+  "description": "PHP class for Novofon API",
   "keywords": [
-    "zadarma",
+    "novofon",
     "api",
     "sip",
     "pbx",
@@ -10,16 +10,16 @@
   ],
   "type": "library",
   "license": "MIT",
-  "homepage": "https://github.com/zadarma/user-api-v1",
+  "homepage": "https://github.com/novofon/user-api-v1",
   "authors": [
     {
-      "name": "Zadarma",
-      "email": "github@zadarma.com"
+      "name": "Novofon",
+      "email": "manage@novofon.ru"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Zadarma_API\\": "lib/"
+      "Novofon_API\\": "lib/"
     }
   },
   "require": {
