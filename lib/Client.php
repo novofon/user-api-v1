@@ -6,8 +6,8 @@ use Exception;
 
 class Client
 {
-    const PROD_URL = 'https://api.zadarma.com';
-    const SANDBOX_URL = 'https://api-sandbox.zadarma.com';
+    const PROD_URL = 'https://api.novofon.ru';
+    const SANDBOX_URL = 'https://api-sandbox.novofon.ru';
 
     private $url;
     private $key;
