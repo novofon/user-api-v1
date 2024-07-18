@@ -1,6 +1,6 @@
 <?php
 
-use Zadarma_API\Api;
+use Novofon_API\Api;
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'include.php';
 

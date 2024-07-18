@@ -1,42 +1,42 @@
 <?php
 
-namespace Zadarma_API;
+namespace Novofon_API;
 
-use Zadarma_API\Response\Balance;
-use Zadarma_API\Response\DirectNumber;
-use Zadarma_API\Response\IncomingCallsStatistics;
-use Zadarma_API\Response\NumberLookup;
-use Zadarma_API\Response\PbxInfo;
-use Zadarma_API\Response\PbxInternal;
-use Zadarma_API\Response\PbxRecording;
-use Zadarma_API\Response\PbxRecordRequest;
-use Zadarma_API\Response\PbxRedirection;
-use Zadarma_API\Response\PbxStatistics;
-use Zadarma_API\Response\PbxStatus;
-use Zadarma_API\Response\Price;
-use Zadarma_API\Response\Redirection;
-use Zadarma_API\Response\SipRedirection;
-use Zadarma_API\Response\SipRedirectionStatus;
-use Zadarma_API\Response\RequestCallback;
-use Zadarma_API\Response\Sip;
-use Zadarma_API\Response\SipCaller;
-use Zadarma_API\Response\SipStatus;
-use Zadarma_API\Response\Sms;
-use Zadarma_API\Response\SpeechRecognition;
-use Zadarma_API\Response\Statistics;
-use Zadarma_API\Response\Tariff;
-use Zadarma_API\Response\Timezone;
-use Zadarma_API\Response\WebrtcKey;
-use Zadarma_API\Response\Zcrm;
-use Zadarma_API\Webhook\AbstractNotify;
-use Zadarma_API\Webhook\NotifyAnswer;
-use Zadarma_API\Webhook\NotifyEnd;
-use Zadarma_API\Webhook\NotifyInternal;
-use Zadarma_API\Webhook\NotifyIvr;
-use Zadarma_API\Webhook\NotifyOutEnd;
-use Zadarma_API\Webhook\NotifyOutStart;
-use Zadarma_API\Webhook\NotifyRecord;
-use Zadarma_API\Webhook\NotifyStart;
+use Novofon_API\Response\Balance;
+use Novofon_API\Response\DirectNumber;
+use Novofon_API\Response\IncomingCallsStatistics;
+use Novofon_API\Response\NumberLookup;
+use Novofon_API\Response\PbxInfo;
+use Novofon_API\Response\PbxInternal;
+use Novofon_API\Response\PbxRecording;
+use Novofon_API\Response\PbxRecordRequest;
+use Novofon_API\Response\PbxRedirection;
+use Novofon_API\Response\PbxStatistics;
+use Novofon_API\Response\PbxStatus;
+use Novofon_API\Response\Price;
+use Novofon_API\Response\Redirection;
+use Novofon_API\Response\SipRedirection;
+use Novofon_API\Response\SipRedirectionStatus;
+use Novofon_API\Response\RequestCallback;
+use Novofon_API\Response\Sip;
+use Novofon_API\Response\SipCaller;
+use Novofon_API\Response\SipStatus;
+use Novofon_API\Response\Sms;
+use Novofon_API\Response\SpeechRecognition;
+use Novofon_API\Response\Statistics;
+use Novofon_API\Response\Tariff;
+use Novofon_API\Response\Timezone;
+use Novofon_API\Response\WebrtcKey;
+use Novofon_API\Response\Zcrm;
+use Novofon_API\Webhook\AbstractNotify;
+use Novofon_API\Webhook\NotifyAnswer;
+use Novofon_API\Webhook\NotifyEnd;
+use Novofon_API\Webhook\NotifyInternal;
+use Novofon_API\Webhook\NotifyIvr;
+use Novofon_API\Webhook\NotifyOutEnd;
+use Novofon_API\Webhook\NotifyOutStart;
+use Novofon_API\Webhook\NotifyRecord;
+use Novofon_API\Webhook\NotifyStart;
 
 class Api extends Client
 {
@@ -515,7 +515,7 @@ class Api extends Client
      */
     public function numberLookupMultiple($numbers)
     {
-        $numbers = array_filter(array_map('\Zadarma_API\Api::filterNumber', $numbers));
+        $numbers = array_filter(array_map('\Novofon_API\Api::filterNumber', $numbers));
         $this->request('info/number_lookup', ['numbers' => $numbers], 'post');
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Zadarma_API\Webhook;
+namespace Novofon_API\Webhook;
 
 class NotifyOutEnd extends AbstractNotify
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Zadarma_API\Response;
+namespace Novofon_API\Response;
 
 /**
  * Class WebrtcKey
- * @package Zadarma_API\Response
+ * @package Novofon_API\Response
  */
 class WebrtcKey extends Response
 {

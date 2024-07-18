@@ -1,6 +1,6 @@
 <?php
 
-namespace Zadarma_API;
+namespace Novofon_API;
 
 use Exception;
 

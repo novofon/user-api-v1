@@ -1,8 +1,8 @@
 <?php
 
-namespace Zadarma_API\Webhook;
+namespace Novofon_API\Webhook;
 
-abstract class AbstractNotify extends \Zadarma_API\Response\Response
+abstract class AbstractNotify extends \Novofon_API\Response\Response
 {
     const EVENT_START = 'NOTIFY_START';
     const EVENT_INTERNAL = 'NOTIFY_INTERNAL';

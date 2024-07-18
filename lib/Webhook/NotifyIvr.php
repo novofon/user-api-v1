@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zadarma_API\Webhook;
+namespace Novofon_API\Webhook;
 
 
 class NotifyIvr extends NotifyStart

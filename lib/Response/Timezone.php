@@ -1,6 +1,6 @@
 <?php
 
-namespace Zadarma_API\Response;
+namespace Novofon_API\Response;
 
 
 class Timezone extends Response

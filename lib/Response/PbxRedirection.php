@@ -1,5 +1,5 @@
 <?php
-namespace Zadarma_API\Response;
+namespace Novofon_API\Response;
 
 class PbxRedirection extends Response
 {

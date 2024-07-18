@@ -1,10 +1,10 @@
 <?php
 
-use Zadarma_API\Api;
-use Zadarma_API\Webhook\AbstractNotify;
-use Zadarma_API\Webhook\NotifyIvr;
-use Zadarma_API\Webhook\NotifyStart;
-use Zadarma_API\Webhook\Request;
+use Novofon_API\Api;
+use Novofon_API\Webhook\AbstractNotify;
+use Novofon_API\Webhook\NotifyIvr;
+use Novofon_API\Webhook\NotifyStart;
+use Novofon_API\Webhook\Request;
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'include.php';
 

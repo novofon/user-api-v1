@@ -1,10 +1,10 @@
 <?php
 
-namespace Zadarma_API\Response;
+namespace Novofon_API\Response;
 
 /**
  * Class IncomingCallsStatistics
- * @package Zadarma_API\Response
+ * @package Novofon_API\Response
  */
 class IncomingCallsStatistics extends Statistics
 {

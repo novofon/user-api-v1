@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Zadarma_API\Webhook;
+namespace Novofon_API\Webhook;
 
 
-use Zadarma_API\Response\Response;
+use Novofon_API\Response\Response;
 
 class WaitDtmf extends Response
 {
