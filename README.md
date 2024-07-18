@@ -1,5 +1,5 @@
-# Zadarma API - User class
-An official PHP class for work with Zadarma API.
+# Novofon API - User class
+An official PHP class for work with Novofon API.
 
 Allows to work with all API methods (including VoIP, PBX, CallBack etc).
 
@@ -9,41 +9,41 @@ Allows to work with all API methods (including VoIP, PBX, CallBack etc).
 - TLS v1.2
 
 ## How to use?
-An official documentation on Zadarma API is [here](https://zadarma.com/support/api/).
+An official documentation on Novofon API is [here](https://novofon.com/support/api/).
 
-Keys for authorization are in [personal account](https://my.zadarma.com/api/).
+Keys for authorization are in [personal account](https://my.novofon.com/api/).
 
 ## Installation
 ### Via Сomposer
 ```sh
-composer require "zadarma/user-api-v1"
+composer require "novofon/user-api-v1"
 ```
 or just add this line to your `composer.json` file:
 ```json
-"zadarma/user-api-v1"
+"novofon/user-api-v1"
 ```
 
 ### Via Git
 ```sh
-git clone git@github.com:zadarma/user-api-v1.git
+git clone git@github.com:novofon/user-api-v1.git
 ```
 
-###  \Zadarma_API\Api call code example
+###  \Novofon_API\Api call code example
 ```php
 <?php
 include_once '/PATH/TO/vendor/autoload.php'; 
-$api = new \Zadarma_API\Api(KEY, SECRET, USE_SANDBOX);
+$api = new \Novofon_API\Api(KEY, SECRET, USE_SANDBOX);
 try{
     $result = $api->getSipStatus('YOURSIP');
     echo $result->sip.' status: '.($result->is_online ? 'online' : 'offline');
-} catch (\Zadarma_API\ApiException $e) {
+} catch (\Novofon_API\ApiException $e) {
     echo 'Error: '.$e->getMessage();
 }
 
 ```
-All other examples you can see in the "[example file](https://github.com/zadarma/user-api-v1/tree/master/examples/index.php)".
+All other examples you can see in the "[example file](https://github.com/novofon/user-api-v1/tree/master/examples/index.php)".
 
-###  \Zadarma_API\Client call code example
+###  \Novofon_API\Client call code example
 ```php
 <?php
 
@@ -54,7 +54,7 @@ $params = array(
     'status' => 'on'
 );
 
-$zd = new \Zadarma_API\Client(YOUR_KEY, YOUR_SECRET);
+$zd = new \Novofon_API\Client(YOUR_KEY, YOUR_SECRET);
 /*
 $zd->call('METHOD', 'PARAMS_ARRAY', 'REQUEST_TYPE', 'FORMAT', 'IS_AUTH');
 where:
@@ -75,4 +75,4 @@ if ($answerObject->status == 'success') {
 }
 ```
 
-All other examples you can see in the "[examples](https://github.com/zadarma/user-api-v1/tree/master/examples)" folder.
+All other examples you can see in the "[examples](https://github.com/novofon/user-api-v1/tree/master/examples)" folder.
