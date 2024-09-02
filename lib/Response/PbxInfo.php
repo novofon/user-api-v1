@@ -1,6 +1,9 @@
 <?php
 namespace Novofon_API\Response;
 
+/**
+ * @deprecated
+ */
 class PbxInfo extends Response
 {
     /** @var integer PBX ID */

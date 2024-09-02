@@ -2,7 +2,9 @@
 
 namespace Novofon_API\Response;
 
-
+/**
+ * @deprecated
+ */
 class SipCaller extends Response
 {
     public $sip;

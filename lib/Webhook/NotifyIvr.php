@@ -3,7 +3,9 @@
 
 namespace Novofon_API\Webhook;
 
-
+/**
+ * @deprecated
+ */
 class NotifyIvr extends NotifyStart
 {
     /* optional parameters */

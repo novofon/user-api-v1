@@ -3,8 +3,11 @@
 namespace Novofon_API;
 
 use Novofon_API\Response\Balance;
+use Novofon_API\Response\Currencies;
 use Novofon_API\Response\DirectNumber;
+use Novofon_API\Response\DirectNumberCountries;
 use Novofon_API\Response\IncomingCallsStatistics;
+use Novofon_API\Response\Languages;
 use Novofon_API\Response\NumberLookup;
 use Novofon_API\Response\PbxInfo;
 use Novofon_API\Response\PbxInternal;
@@ -15,6 +18,7 @@ use Novofon_API\Response\PbxStatistics;
 use Novofon_API\Response\PbxStatus;
 use Novofon_API\Response\Price;
 use Novofon_API\Response\Redirection;
+use Novofon_API\Response\RequestCheckNumber;
 use Novofon_API\Response\SipRedirection;
 use Novofon_API\Response\SipRedirectionStatus;
 use Novofon_API\Response\RequestCallback;
@@ -32,7 +36,6 @@ use Novofon_API\Webhook\AbstractNotify;
 use Novofon_API\Webhook\NotifyAnswer;
 use Novofon_API\Webhook\NotifyEnd;
 use Novofon_API\Webhook\NotifyInternal;
-use Novofon_API\Webhook\NotifyIvr;
 use Novofon_API\Webhook\NotifyOutEnd;
 use Novofon_API\Webhook\NotifyOutStart;
 use Novofon_API\Webhook\NotifyRecord;
@@ -41,10 +44,6 @@ use Novofon_API\Webhook\NotifyStart;
 class Api extends Client
 {
     const VERSION = 'v1';
-
-    const PBX_REDIRECTION_NO_GREETING = 'no';
-    const PBX_REDIRECTION_STANDART_GREETING = 'standart';
-    const PBX_REDIRECTION_OWN_GREETING = 'own';
 
     const IN_CALLS = 'in';
     const OUT_CALLS = 'out';
@@ -74,15 +73,39 @@ class Api extends Client
     }
 
     /**
+     * Return allowed currencies.
+     *
+     * @return Currencies
+     * @throws ApiException
+     */
+    public function getCurrencies()
+    {
+        $data = $this->request('info/lists/currencies');
+        return new Currencies($data);
+    }
+
+    /**
+     * Return allowed languages.
+     *
+     * @return Languages
+     * @throws ApiException
+     */
+    public function getLanguages()
+    {
+        $data = $this->request('info/lists/languages');
+        return new Languages($data);
+    }
+
+    /**
      * Request a callback.
      * @see https://zadarma.com/en/services/calls/callback/
      *
-     * @param string from Your phone/SIP number, the PBX extension number or the PBX scenario,
+     * @param string $from Your phone/SIP number, the PBX extension number or the PBX scenario,
      *  to which the CallBack is made.
-     * @param string to The phone or SIP number that is being called.
-     * @param null|string sip SIP user's number or the PBX extension number,
+     * @param string $to The phone or SIP number that is being called.
+     * @param null|string $sip SIP user's number or the PBX extension number,
      *  which is used to make the call.
-     * @param null|string predicted If this flag is specified the request is predicted
+     * @param null|string $predicted If this flag is specified the request is predicted
      *  (the system calls the “to” number, and only connects it to your SIP, or your phone number,
      *  if the call is successful.);
      * @return RequestCallback
@@ -100,6 +123,33 @@ class Api extends Client
         ]);
         $data = $this->request('request/callback', $params);
         return new RequestCallback($data);
+    }
+
+    /**
+     * Request a callback.
+     * @see https://zadarma.com/en/services/calls/callback/
+     *
+     * @param string $caller_id Your phone number
+     * @param string $to The phone for check number.
+     * @param string $code code to reproduce
+     * @param null|string $predicted If this flag is specified the request is predicted
+     *  (the system calls the “to” number, and only connects it to your SIP, or your phone number,
+     *  if the call is successful.);
+     * @return RequestCheckNumber
+     * @throws ApiException
+     */
+    public function requestCheckNumber($caller_id, $to, $code, $predicted = null)
+    {
+        $params = [
+            'caller_id' => $caller_id,
+            'to' => self::filterNumber($to),
+            'code' => $code
+        ];
+        $params = $params + self::filterParams([
+                'predicted' => $predicted,
+            ]);
+        $data = $this->request('request/checknumber', $params);
+        return new RequestCheckNumber($data);
     }
 
     /**
@@ -134,6 +184,21 @@ class Api extends Client
     }
 
     /**
+     * Return allowed countries for direct numbers
+     * @return DirectNumberCountries
+     * @throws ApiException
+     */
+    public function getDirectNumberCountries($language = null)
+    {
+        $params = self::filterParams([
+            'language' => is_null($language) ? 'RU' : $language
+        ]);
+
+        $data = $this->request('direct_numbers/countries', $params);
+        return new DirectNumberCountries($data);
+    }
+
+    /**
      * Return information about the user's phone numbers.
      * @return DirectNumber[]
      * @throws ApiException
@@ -142,6 +207,22 @@ class Api extends Client
     {
         $data = $this->request('direct_numbers');
         return self::arrayToResultObj($data['info'], DirectNumber::class);
+    }
+
+    /**
+     * Return information about the user's phone number.
+     * @return DirectNumber
+     * @throws ApiException
+     */
+    public function getDirectNumber($number, $type)
+    {
+        $params = [
+            'number' => $number,
+            'type'=> $type
+        ];
+
+        $data = $this->request('direct_numbers/number', $params);
+        return new DirectNumber($data);
     }
 
     /**
@@ -311,6 +392,75 @@ class Api extends Client
         ];
         $data = $this->request('statistics/incoming-calls', self::filterParams($params));
         return new IncomingCallsStatistics($data);
+    }
+
+    /**
+     * Return notify object populated from postData, depending on 'event' field.
+     * If cannot match event to object, return null.
+     * Perform signature test, before populating data.
+     * Throw SignatureException in case of signature test failure.
+     * @param array|null $eventFilter array of allowed events. If not specified, return all events.
+     * Example: [AbstractNotify::EVENT_START, AbstractNotify::EVENT_IVR]
+     * @param array|null $postData Data for model populating. If null, $_POST values used.
+     * @param null $signature
+     * @return null|
+     */
+    public function getWebhookEvent($eventFilter = null, $postData = null, $signature = null)
+    {
+        if ($postData === null) {
+            $postData = $_POST;
+        }
+        if (empty($postData['event']) || ($eventFilter && !in_array($postData['event'], $eventFilter))) {
+            return null;
+        }
+
+        if ($signature === null) {
+            $headers = getallheaders();
+            if (empty($headers['Signature'])) {
+                return null;
+            } else {
+                $signature = $headers['Signature'];
+            }
+        }
+
+        switch ($postData['event']) {
+            case AbstractNotify::EVENT_START:
+                $notify = new NotifyStart($postData);
+                break;
+
+            case AbstractNotify::EVENT_INTERNAL:
+                $notify = new NotifyInternal($postData);
+                break;
+
+            case AbstractNotify::EVENT_ANSWER:
+                $notify = new NotifyAnswer($postData);
+                break;
+
+            case AbstractNotify::EVENT_END:
+                $notify = new NotifyEnd($postData);
+                break;
+
+            case AbstractNotify::EVENT_OUT_START:
+                $notify = new NotifyOutStart($postData);
+                break;
+
+            case AbstractNotify::EVENT_OUT_END:
+                $notify = new NotifyOutEnd($postData);
+                break;
+
+            case AbstractNotify::EVENT_RECORD:
+                $notify = new NotifyRecord($postData);
+                break;
+
+            default:
+                return null;
+        }
+
+        if ($signature != $this->encodeSignature($notify->getSignatureString())) {
+            return null;
+        }
+
+        return $notify;
     }
 
     /**

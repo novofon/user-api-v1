@@ -1,6 +1,9 @@
 <?php
 namespace Novofon_API\Response;
 
+/**
+ * @deprecated
+ */
 class PbxRedirection extends Response
 {
     public $current_status;

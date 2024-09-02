@@ -2,7 +2,9 @@
 
 namespace Novofon_API\Response;
 
-
+/**
+ * @deprecated
+ */
 class Tariff extends Response
 {
     /** @var integer User's current price plan ID. */

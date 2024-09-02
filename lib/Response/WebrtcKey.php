@@ -3,8 +3,7 @@
 namespace Novofon_API\Response;
 
 /**
- * Class WebrtcKey
- * @package Novofon_API\Response
+ * @deprecated
  */
 class WebrtcKey extends Response
 {

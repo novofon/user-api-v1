@@ -2,7 +2,9 @@
 
 namespace Novofon_API\Response;
 
-
+/**
+ * @deprecated
+ */
 class Redirection extends Response
 {
     public $sip_id;
